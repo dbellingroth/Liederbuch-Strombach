@@ -1,0 +1,21 @@
+\documentclass[xetex ,a5paper, pagesize, twoside=true]{scrartcl}
+
+\newcommand{\version}{1.1.1}
+\include{header}
+\include{fonts}
+
+\begin{document}
+\clearpage
+\setcounter{realpage}{-1}
+\setcounter{page}{-5}
+\includepdf{cover}
+\mbox{}\newpage
+\include{cover leer}
+
+\include{toc}
+
+\include{songs}
+\mbox{}\newpage
+\includepdf{cover rück}
+
+\end{document}

@@ -1,0 +1,137 @@
+\usepackage{ngerman}
+\usepackage[T1]{fontenc}
+\usepackage{xltxtra}
+\usepackage{tikz}
+\usepackage{xstring}
+\usepackage[inner=14mm, outer=7mm, top=7mm, bottom=7mm]{geometry}
+\usepackage{tocloft}
+\usepackage{makeidx}
+\usepackage[columns=2,indentunit=0mm,justific=raggedright]{idxlayout}
+\usepackage{letltxmacro}
+\usepackage{pdfpages}
+\usepackage[colorlinks=false, bookmarks, hyperindex=false]{hyperref}
+\usepackage{keyval}
+
+%Style für xindy
+\usepackage{filecontents}
+\begin{filecontents*}{inhalt.xdy}
+(markup-locclass-list :open "\dotfill{}")
+(markup-letter-group :open-head "~n~n \textbf{\textsf{" :close-head "}}\nopagebreak~n")
+\end{filecontents*} 
+
+\renewcommand{\indexname}{Inhaltsverzeichnis}
+
+\newcounter{songnumber}
+\setcounter{songnumber}{1}
+
+\newcounter{songpage}
+\setcounter{songpage}{1}
+
+\newcounter{realpage}
+
+\makeatletter
+\define@key{song}{transform}{\def\transform{#1}}
+\define@key{song}{pagecommand}{\def\pagecommand{#1}}
+\setkeys{song}{transform=plain,pagecommand={}}
+\makeatother
+
+% Kommando um Lieder einzufügen
+\newcommand{\song}[3][]{{
+
+\setkeys{song}{#1}
+
+
+% Skalierung und Verschiebung der PDF-Datei festlegen
+  \ifthenelse{\equal{#1}{old}}{  
+    \newcommand{\yoffset}{-8}
+    \newcommand{\scale}{1.1}
+  }{
+    \ifthenelse{\equal{#1}{new}}{  
+      \newcommand{\yoffset}{-4mm}
+      \newcommand{\scale}{1.06}
+    }{
+      \newcommand{\yoffset}{0}
+      \newcommand{\scale}{1}
+    }
+  }
+
+% Ersten Titel auslesen
+\StrCount{#2}{,}[\numoftitles]
+
+\ifnum\numoftitles>0\relax
+    \StrBefore[1]{#2}{,}[\songtitle]%
+\else
+    \def\songtitle{#2}%
+\fi
+
+
+
+
+% Seitencounter auf Liednummer setzen, um Indexerstellung auszutricksen   
+\setcounter{page}{\arabic{songnumber}}
+% Titel zu Index hinzufügen
+\foreach \titel in {#2} {
+	\index{\titel|hyperpage}
+}
+
+% Lied-PDF einbinden
+\includepdf[pages=-,offset= 0 \voffset, scale=\scale,pagecommand={
+% Alle Seiten eines Liedes bekommen die gleiche Seitennummer; die Liednummer. Damit das Fortlaufen innerhalb eines Liedes unterbunden wird und man beim Index (Inhaltsverzeichnis) zum richtigen Lied springt (erste Seite mit der entsprechenden Seitennummer).
+\setcounter{page}{\arabic{songnumber}}
+\ifnumcomp{\value{songpage}}{<}{2}
+{
+	\begin{tikzpicture}[remember picture, overlay]
+		% Bookmark im PDF erstellen
+		\node[below=0mm] at (current page.north){
+			\hypertarget{\arabic{songnumber}}{}
+			\pdfbookmark[1]{Lied \arabic{songnumber} - \songtitle}{\arabic{songnumber}}
+		};
+        % Liednummer einfügen
+        \ifnumodd{\value{realpage}}{
+        	\node[below=11.1mm, left=7mm][anchor=north east] at (current page.north east){
+        		\textsf{\Huge{\textbf{\arabic{songnumber}}}}
+        	};
+        }{
+        	\node[below=11.1mm, right=7mm][anchor=north west] at (current page.north west){
+        		\textsf{\Huge{\textbf{\arabic{songnumber}}}}
+        	};
+        }
+     \end{tikzpicture}
+}{
+}
+\pagecommand
+\stepcounter{songpage}
+\stepcounter{realpage}
+}]{noten/#3}
+\setcounter{songpage}{1}
+\stepcounter{songnumber}
+}}
+
+\makeatletter
+\define@key{songimage}{x}{\def\x{#1}}
+\define@key{songimage}{y}{\def\y{#1}}
+\define@key{songimage}{scale}{\def\scale{#1}}
+\define@key{songimage}{page}{\def\page{#1}}
+\makeatother
+
+\newcommand{\songimage}[2][]{
+\setkeys{songimage}{page=1,x=0,y=0,scale=1}
+\setkeys{songimage}{#1}
+\ifnum\thesongpage=\page
+\begin{tikzpicture}[remember picture, overlay]
+		\node[right=\x,below=\y] at (current page.north){
+			\includegraphics[scale=\scale]{#2}
+		};
+     \end{tikzpicture}
+
+\fi
+}
+
+\newcommand{\emptypage}[1]{
+	\newpage
+	\thispagestyle{plain} % empty
+	\mbox{#1}
+	\stepcounter{realpage}
+}
+
+\makeindex

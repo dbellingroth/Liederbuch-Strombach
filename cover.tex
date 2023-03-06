@@ -1,0 +1,11 @@
+\pagestyle{empty}
+\includepdf[pagecommand={
+    \begin{tikzpicture}[remember picture, overlay]
+        \node at (current page.south east){
+            \begin{tikzpicture}[overlay]
+                \node[anchor=east] at (-9mm,7mm) {{\caveat \color{black} \large{Version: \version}}};
+            \end{tikzpicture}
+        };
+    \end{tikzpicture}
+}
+]{cover}
