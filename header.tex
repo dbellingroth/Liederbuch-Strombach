@@ -89,11 +89,11 @@
         % Liednummer einfügen
         \ifnumodd{\value{realpage}}{
         	\node[below=11.1mm, left=7mm][anchor=north east] at (current page.north east){
-        		\textsf{\Huge{\textbf{\arabic{songnumber}}}}
+        		\textsf{\Huge{\hyperlink{Inhaltsverzeichnis}{\textbf{\arabic{songnumber}}}}}
         	};
         }{
         	\node[below=11.1mm, right=7mm][anchor=north west] at (current page.north west){
-        		\textsf{\Huge{\textbf{\arabic{songnumber}}}}
+        		\textsf{\Huge{\hyperlink{Inhaltsverzeichnis}{\textbf{\arabic{songnumber}}}}}
         	};
         }
      \end{tikzpicture}
