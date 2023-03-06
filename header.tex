@@ -15,7 +15,8 @@
 %Style für xindy
 \usepackage{filecontents}
 \begin{filecontents*}{inhalt.xdy}
-(markup-locclass-list :open "\dotfill{}")
+(markup-keyword-list :open "\hangindent=2.5mm \hangafter=1" :close "" :depth 0)
+(markup-locclass-list :open "\nobreak\dotfill{}" :close "")
 (markup-letter-group :open-head "~n~n \textbf{\textsf{" :close-head "}}\nopagebreak~n")
 \end{filecontents*} 
 
