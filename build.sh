@@ -1,4 +1,5 @@
 #!/bin/sh
+# Script zum Kompilieren unter Linux und macOS
 xelatex "Liederbuch Strombach.tex"
 texindy -C utf8 -M inhalt.xdy "Liederbuch Strombach.idx"
 xelatex "Liederbuch Strombach.tex"
