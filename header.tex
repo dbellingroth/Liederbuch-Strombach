@@ -65,8 +65,8 @@
 \fi
 
 
-
-
+% Echte Seitennummer merken
+\setcounter{realpage}{\arabic{page}}
 % Seitencounter auf Liednummer setzen, um Indexerstellung auszutricksen   
 \setcounter{page}{\arabic{songnumber}}
 % Titel zu Index hinzufügen
@@ -106,6 +106,10 @@
 }]{noten/#3}
 \setcounter{songpage}{1}
 \stepcounter{songnumber}
+
+% Auf echte Seitenzahl zurücksetzen
+\setcounter{page}{\arabic{realpage}}
+\newpage
 }}
 
 \makeatletter
@@ -132,7 +136,11 @@
 	\newpage
 	\thispagestyle{plain} % empty
 	\mbox{#1}
-	\stepcounter{realpage}
+}
+
+\newcommand{\textpage}[1]{
+	#1
+  \newpage
 }
 
 \makeindex
