@@ -79,7 +79,7 @@
 % Alle Seiten eines Liedes bekommen die gleiche Seitennummer; die Liednummer. Damit das Fortlaufen innerhalb eines Liedes unterbunden wird und man beim Index (Inhaltsverzeichnis) zum richtigen Lied springt (erste Seite mit der entsprechenden Seitennummer).
 \setcounter{page}{\arabic{songnumber}}
 \ifnumcomp{\value{songpage}}{<}{2}
-{
+{ % Erste Seite des Lieds
 	\begin{tikzpicture}[remember picture, overlay]
 		% Bookmark im PDF erstellen
 		\node[below=0mm] at (current page.north){
@@ -97,7 +97,8 @@
         	};
         }
      \end{tikzpicture}
-}{
+}{ 
+  % Jede weitere Seite des Lieds
 }
 \pagecommand
 \stepcounter{songpage}
