@@ -13,12 +13,11 @@
 \usepackage{keyval}
 
 %Style für xindy
-\usepackage{filecontents}
-\begin{filecontents*}{inhalt.xdy}
+\begin{filecontents}[overwrite,noheader]{inhalt.xdy}
 (markup-keyword-list :open "\hangindent=2.5mm \hangafter=1" :close "" :depth 0)
 (markup-locclass-list :open "\nobreak\dotfill{}" :close "")
 (markup-letter-group :open-head "~n~n \textbf{\textsf{" :close-head "}}\nopagebreak~n")
-\end{filecontents*} 
+\end{filecontents} 
 
 \renewcommand{\indexname}{Inhaltsverzeichnis}
 
