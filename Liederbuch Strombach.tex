@@ -6,15 +6,17 @@
 
 \begin{document}
 \clearpage
-\setcounter{realpage}{\arabic{page}}
+\setcounter{realpage}{-1}
+\setcounter{page}{-5}
 \include{cover_aussen}
 \emptypage{}
 \include{cover_innen}
+\setcounter{realpage}{\arabic{page}}
 
 \include{toc}
 
 \include{songs}
-
+\emptypage{}
 \include{cover_rueckseite}
 
 \end{document}

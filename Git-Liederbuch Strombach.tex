@@ -1,0 +1,22 @@
+\documentclass[xetex ,a5paper, pagesize, twoside=true]{scrartcl}
+
+\newcommand{\version}{1.2.0}
+\input{header}
+\input{fonts}
+
+\begin{document}
+\clearpage
+\setcounter{realpage}{-1}
+\setcounter{page}{-5}
+\include{cover_aussen}
+\emptypage{}
+\include{cover_innen}
+\setcounter{realpage}{\arabic{page}}
+
+\include{toc}
+
+\include{Gitsongs}
+\emptypage{}
+\include{cover_rueckseite}
+
+\end{document}
